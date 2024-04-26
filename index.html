@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        user-select: none;
+        background-image: url('https://wallpaperaccess.com/full/2141.jpg');
+        background-position: center;
+        background-size: contain;
+    }
+
+    .container {
+        margin-left: 1.8em;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 13px 13px 200px #3b3c3c,
+            -13px -13px 20px #333232;
+        height: 500px;
+    }
+
+    .content {
+        width: 100%;
+        margin-top: 1.7em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: #1e1e1e;
+        height: 600px;
+        align-content: center;
+    }
+
+    .row button,
+    .row1 button {
+        width: 90px;
+        background-color: #1a1919;
+        color: #d0cbcb;
+        height: 50px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        margin: 5px;
+        border-radius: 100px;
+        transition: .1s;
+        box-shadow: 5px 5px 8px #8b8a8a20,
+            -5px -5px 8px #393838;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .row button::before,
+    .row1 button::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.047);
+        left: -90%;
+        top: 0;
+        transition: all 0.1s;
+        animation: pulse 1.2s infinite alternate;
+    }
+
+    .row button:active::before,
+    .row1 button:active::before {
+        background-color: rgba(255, 255, 255, 0.279);
+        left: 0;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(0.9);
+        }
+        100% {
+            transform: scale(2.5);
+        }
+    }
+
+    .display #screen {
+        margin-bottom: .5em;
+        width: 590px;
+        height: 110px;
+        font-size: 45px;
+        outline: none;
+        border: none;
+        text-align: right;
+        padding-right: .5em;
+        background: #83858696;
+        border-radius: 6px;
+        color: white;
+        box-shadow: inset 8px 8px 8px #4b4b4c,
+            inset -8px -8px 8px#4b4b4c;
+    }
+    
+    #ac,
+    #ce,
+    #eval {
+        background-color: #333232;
+    }
+
+    #eval {
+        background: #ff5500;
+        color: #d0cbcb;
+    }
+
+    #ac,
+    #ce {
+        background: #ff5500;
+        color: #d0cbcb;
+    }
+
+    @media screen and (max-width: 400px) {
+        .container {
+            margin-left: 0;
+            height: auto;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 10px;
+        }
+        .btns{
+            text-align: center;
+        }
+        
+        .display #screen {
+            width: 80%;
+            margin: 30px;
+            font-size: 30px;
+            height: auto;
+        }
+
+        .row {
+            flex-wrap: wrap;
+        }
+
+        .row button {
+            width: 10%;
+            height: 40px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="display">
+            <input id="screen" type="text" placeholder="0">
+        </div>
+
+        <div class="btns">
+
+            <div  class="row">
+                <button id="ce" onclick="backspc()">CE</button>
+                <button onclick="fact()">x!</button>
+                <button class="btn" onclick="Displynum('(')">(</button>
+                <button class="btn" onclick="Displynum(')')">)</button>
+                <button class="btn" onclick="Displynum('%')">%</button>
+                <button id="ac"  class="btn" onclick="clearText()">AC</button>
+            </div>
+            
+            <div class="row">
+                <button onclick="sin()">sin</button>
+                <button onclick="pi()">π</button>
+                <button class="btn" onclick="Displynum(7)">7</button>
+                <button class="btn" onclick="Displynum(8)">8</button>
+                <button class="btn" onclick="Displynum(9)">9</button>
+                <button class="opt" onclick="Displynum('/')">÷</button>
+            </div>
+
+            <div class="row">
+                <button onclick="cos()">cos</button>
+                <button onclick="log()">log</button>
+                <button class="btn" onclick="Displynum(4)">4</button>
+                <button class="btn" onclick="Displynum(5)">5</button>
+                <button class="btn" onclick="Displynum(6)">6</button>
+                <button class="opt" onclick="Displynum('*')">×</button>
+            </div>
+
+            <div class="row">
+                <button onclick="tan()">tan</button>
+                <button onclick="sqrt()">√</button>
+                <button class="btn" onclick="Displynum(1)">1</button>
+                <button class="btn" onclick="Displynum(2)">2</button>
+                <button class="btn" onclick="Displynum(3)">3</button>
+                <button class="opt" onclick="Displynum('-')">-</button>
+            </div>
+
+            <div class="row">
+                <button onclick="e()">e</button>
+                <button onclick="pow()">x <span style="position: relative; bottom: .4em; right: .1em;">y</span>
+                </button>
+                <button class="btn" onclick="Displynum(0)">0</button>
+                <button class="btn">.</button>
+                <button id="eval" class="opt" onclick="evaluatenum()">=</button>
+                <button class="opt" onclick="Displynum('+')">+</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var screen = document.querySelector('#screen');
+
+    function Displynum(num) {
+        screen.value += num
+    }
+
+    function clearText() {
+        screen.value = "";
+    }
+
+    function evaluatenum() {
+        screen.value = eval(screen.value)
+    }
+
+    function removelastchar() {
+        screen.value = screen.value.slice(0, -1)
+    }
+
+    function sin() {
+        screen.value = Math.sin(screen.value);
+    }
+
+    function cos() {
+        screen.value = Math.cos(screen.value);
+    }
+
+    function tan() {
+        screen.value = Math.tan(screen.value);
+    }
+
+    function pow() {
+        screen.value = Math.pow(screen.value, 2);
+    }
+
+    function sqrt() {
+        screen.value = Math.sqrt(screen.value, 2);
+    }
+
+    function log() {
+        screen.value = Math.log(screen.value);
+    }
+
+    function pi() {
+        screen.value = 3.14159265359;
+    }
+
+    function e() {
+        screen.value = 2.71828182846;
+    }
+
+    function fact() {
+        var i, num, f;
+        f = 1
+        num = screen.value;
+        for (i = 1; i <= num; i++) {
+            f = f * i;
+        }
+
+        i = i - 1;
+
+        screen.value = f;
+    }
+
+    function backspc() {
+        screen.value = screen.value.substr(0, screen.value.length - 1);
+    }
+</script>
+
+</html>
